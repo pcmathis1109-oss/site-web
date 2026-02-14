@@ -3,106 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portail Anime Sama - 400 liens</title>
+<title>Anime Sama</title>
 <style>
-body, html { margin:0; padding:0; font-family: Arial, sans-serif; background:#f5f5f5; }
-a { text-decoration:none; color: inherit; }
-header { background:#1e1e1e; color:#fff; padding:20px; text-align:center; }
-header h1 { margin:0; font-size:2em; }
-nav { margin-top:10px; }
-nav a { margin:0 10px; color:#fff; font-weight:bold; }
-.search-bar { text-align:center; margin:20px; }
-.search-bar input { width:80%; padding:10px; font-size:16px; border-radius:5px; border:1px solid #ccc; }
-.category { text-align:center; margin:30px 0 10px 0; font-size:1.5em; font-weight:bold; color:#2980b9; }
-.link-list { display:flex; flex-wrap:wrap; justify-content:center; gap:15px; padding:10px; }
-.link-card { background:#fff; width:200px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2); padding:15px; text-align:center; transition: transform 0.2s; }
-.link-card:hover { transform: scale(1.05); }
-.link-card img { width:100%; height:120px; object-fit:cover; border-radius:5px; }
-.link-card h3 { margin:10px 0; font-size:16px; }
-.link-card a { display:block; padding:8px; background:#2980b9; color:#fff; border-radius:5px; margin-top:5px; }
-.link-card a:hover { background:#1c5980; }
-footer { text-align:center; padding:15px; background:#1e1e1e; color:#fff; margin-top:30px; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+header { background:#1e1e1e; color:#fff; padding:15px; text-align:center; }
+nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
+form { max-width:400px; margin:30px auto; display:flex; flex-direction:column; gap:15px; background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+input, textarea { padding:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; width:100%; }
+button { padding:10px; background:#2980b9; color:#fff; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
+button:hover { background:#1c5980; }
+#thanks { display:none; text-align:center; color:green; margin-top:10px; font-weight:bold; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Portail Anime Sama - 400 liens</h1>
+  <h1>Anime Sama</h1>
   <nav>
-    <a href="#anime">Anime</a>
-    <a href="#jeux">Jeux</a>
-    <a href="#utiles">Sites utiles</a>
-    <a href="#divers">Divers</a>
+    <a href="index.html">Accueil</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
 
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="🔍 Rechercher un lien...">
-</div>
+<main>
+  <h2 style="text-align:center; margin-top:30px;">Bienvenue sur Anime Sama !</h2>
+  <p style="text-align:center;">Ici tu peux trouver tous tes liens préférés.</p>
+</main>
 
-<!-- Categories -->
-<div class="category" id="anime">Anime</div>
-<div class="link-list" id="animeList"></div>
-
-<div class="category" id="jeux">Jeux</div>
-<div class="link-list" id="gamesList"></div>
-
-<div class="category" id="utiles">Sites utiles</div>
-<div class="link-list" id="usefulList"></div>
-
-<div class="category" id="divers">Divers</div>
-<div class="link-list" id="diversList"></div>
-
-<footer>
-  &copy; 2026 Anime Sama | Tous droits réservés
-</footer>
+<!-- FORMULAIRE CONTACT -->
+<section>
+  <form id="contactForm" action="YOUR_FORMSPREE_LINK" method="POST">
+    <input type="text" name="name" placeholder="Ton nom" required>
+    <input type="email" name="email" placeholder="Ton email" required>
+    <textarea name="message" placeholder="Ton message" rows="5" required></textarea>
+    <button type="submit">Envoyer</button>
+  </form>
+  <p id="thanks">Merci ! Votre message a été envoyé.</p>
+</section>
 
 <script>
-// ---- TABLEAU DE LIENS ----
-const linksData = {
-  anime: [],
-  jeux: [],
-  utiles: [],
-  divers: []
-};
-
-// Générer 100 liens par catégorie (placeholders)
-for(let i=1;i<=100;i++){
-  linksData.anime.push({title:`Anime ${i}`, url:`https://www.google.com/search?q=anime+${i}`, img:`https://via.placeholder.com/200x120.png?text=Anime+${i}`});
-  linksData.jeux.push({title:`Jeu ${i}`, url:`https://www.google.com/search?q=jeu+${i}`, img:`https://via.placeholder.com/200x120.png?text=Jeu+${i}`});
-  linksData.utiles.push({title:`Site utile ${i}`, url:`https://www.google.com/search?q=site+utile+${i}`, img:`https://via.placeholder.com/200x120.png?text=Site+${i}`});
-  linksData.divers.push({title:`Divers ${i}`, url:`https://www.google.com/search?q=misc+${i}`, img:`https://via.placeholder.com/200x120.png?text=Divers+${i}`});
-}
-
-// ---- FONCTION POUR CREER LES CARTES ----
-function createCards(categoryId, listId){
-  const container = document.getElementById(listId);
-  linksData[categoryId].forEach(link=>{
-    const card = document.createElement('div');
-    card.className = 'link-card';
-    card.innerHTML = `
-      <img src="${link.img}" alt="${link.title}">
-      <h3>${link.title}</h3>
-      <a href="${link.url}" target="_blank">Voir</a>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// Générer toutes les cartes
-createCards('anime','animeList');
-createCards('jeux','gamesList');
-createCards('utiles','usefulList');
-createCards('divers','diversList');
-
-// ---- RECHERCHE ----
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('keyup', () => {
-  const filter = searchInput.value.toLowerCase();
-  document.querySelectorAll('.link-card').forEach(card=>{
-    const title = card.querySelector('h3').textContent.toLowerCase();
-    card.style.display = title.includes(filter) ? '' : 'none';
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetch(form.action, {
+    method: form.method,
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      document.getElementById('thanks').style.display = 'block';
+      form.reset();
+    } else {
+      alert('Oups ! Il y a eu un problème.');
+    }
   });
 });
 </script>
