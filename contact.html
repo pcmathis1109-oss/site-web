@@ -3,34 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact - MonSite</title>
-<link rel="stylesheet" href="style.css">
+<title>Contact - Anime Sama</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
+header { background:#1e1e1e; color:#fff; text-align:center; padding:15px; }
+h1 { margin:0; }
+form { max-width:400px; margin:30px auto; display:flex; flex-direction:column; gap:15px; background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+input, textarea { padding:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; width:100%; }
+button { padding:10px; background:#2980b9; color:#fff; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
+button:hover { background:#1c5980; }
+#thanks { display:none; text-align:center; color:green; margin-top:10px; font-weight:bold; }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>🌐 MonSite</h1>
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="liens.html">Portail de liens</a>
-        <a href="contact.html" class="active">Contact</a>
-    </nav>
+  <h1>Contact - Anime Sama</h1>
 </header>
 
-<section class="contact-section">
-    <h2>Contactez-nous ✉️</h2>
-    <form id="contactForm">
-        <input type="text" placeholder="Nom" required>
-        <input type="email" placeholder="Email" required>
-        <textarea placeholder="Votre message" required></textarea>
-        <button type="submit">Envoyer</button>
-    </form>
-</section>
+<form id="contactForm" action="YOUR_FORMSPREE_LINK" method="POST">
+  <input type="text" name="name" placeholder="Ton nom" required>
+  <input type="email" name="email" placeholder="Ton email" required>
+  <textarea name="message" placeholder="Ton message" rows="5" required></textarea>
+  <button type="submit">Envoyer</button>
+</form>
 
-<footer>
-    <p>© 2026 MonSite. Tous droits réservés.</p>
-</footer>
+<p id="thanks">Merci ! Votre message a été envoyé.</p>
 
-<script src="script.js"></script>
+<script>
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // empêche le rechargement
+  fetch(form.action, {
+    method: form.method,
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      document.getElementById('thanks').style.display = 'block';
+      form.reset();
+    } else {
+      alert('Oups ! Il y a eu un problème.');
+    }
+  });
+});
+</script>
+
 </body>
 </html>
